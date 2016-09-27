@@ -46,7 +46,9 @@ module Telegram
         while running
           begin
             fetch_updates do |update|
-              controller.dispatch(bot, update)
+              req = ActionDispatch::Request.new(update)
+              #res = make_response! req
+              controller.dispatch(bot, req, nil)
             end
           rescue Interrupt
             @running = false

@@ -124,7 +124,12 @@ module Telegram
       # Second argument can be either update object with hash access & string
       # keys or Hash with `:from` or `:chat` to override this values and assume
       # that update is nil.
-      def initialize(bot = nil, update = nil)
+      def initialize(bot = nil, update_req = nil, update_resp = nil)
+        update = nil
+        unless update_req == nil
+          update = update_req.env
+        end
+
         if update.is_a?(Hash) && (update.key?(:from) || update.key?(:chat))
           options = update
           update = nil
