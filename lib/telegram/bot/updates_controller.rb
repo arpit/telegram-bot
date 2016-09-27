@@ -127,7 +127,11 @@ module Telegram
       def initialize(bot = nil, update_req = nil, update_resp = nil)
         update = nil
         unless update_req == nil
-          update = update_req.env
+          if(update_req.is_a?(Hash))
+            update = update_req
+          else
+            update = update_req.env
+          end
         end
 
         if update.is_a?(Hash) && (update.key?(:from) || update.key?(:chat))
